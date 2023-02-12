@@ -94,8 +94,6 @@ func getLogWriter() zapcore.WriteSyncer {
 
 	filename := fmt.Sprintf("%v/%v.%v", logConfig.RootDir, logFilename, time.Now().Format("20060102"))
 
-	fmt.Println(filename)
-
 	file := &lumberjack.Logger{
 		Filename:   filename,
 		MaxSize:    logConfig.MaxSize,

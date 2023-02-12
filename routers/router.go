@@ -11,7 +11,7 @@ func SetRouter(r *gin.Engine) {
 
 	commentRouter := r.Group("/comment")
 	{
-		commentRouter.GET("/getCommentById/:id", controller.GetCommentById)
+		commentRouter.GET("/getCommentById/:id", middleware.NeedLogin, controller.GetCommentById)
 		commentRouter.GET("/addComment", middleware.CheckLogin, controller.AddComment)
 	}
 
