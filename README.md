@@ -1,2 +1,0 @@
-# gin_project_template
-基于gin框架封装的单体项目开发目录模版
