@@ -1,7 +1,7 @@
 package model
 
 import (
-	"project/global"
+	"project/app/model/gdao"
 )
 
 type Comment struct {
@@ -20,21 +20,31 @@ type Comment struct {
 
 func GetCommentById(commentId int64) (Comment, error) {
 	comment := Comment{}
-	err := global.App.DB.Get(&comment, "SELECT * FROM comment WHERE commentId= ?", commentId)
-
+	point := gdao.GetEndPoint[Comment]{
+		Model: &comment,
+		Table: "comment",
+		Conditions: map[string]any{
+			"commentId=": commentId,
+		},
+		Fields: []string{"*"},
+	}
+	err := point.Get()
 	return comment, err
 }
 
-func AddComment(comment Comment) (int64, error) {
-
-	sqlStr := "INSERT INTO comment (content, createTime, updateTime) VALUES (:content, :createTime, :updateTime)"
-
-	result, err := global.App.DB.NamedExec(sqlStr, comment)
-
-	if err != nil {
-		return 0, err
+func AddComment(userId int64, topicId int64, content string, topicType string, replyId int64, owner uint) (int64, error) {
+	point := gdao.InsertEndpoint[Comment]{
+		Table: "comment",
+		Rows: map[string]any{
+			"topicId":   topicId,
+			"topicType": topicType,
+			"userId":    userId,
+			"replyId":   replyId,
+			"content":   content,
+			"owner":     owner,
+		},
 	}
-	newCommentId, err := result.LastInsertId()
+	insertId, err := point.Insert()
+	return insertId, err
 
-	return newCommentId, nil
 }

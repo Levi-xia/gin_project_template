@@ -67,8 +67,7 @@ func AddComment(c *gin.Context) {
 		CreateTime: time.Now().Unix(),
 		UpdateTime: time.Now().Unix(),
 	}
-
-	commentId, err := model.AddComment(comment)
+	commentId, err := service.AddComment(c, comment)
 
 	if err != nil {
 		common.WithError(c, common.DB_QUERY_FAILED, nil, common.Options{
@@ -77,7 +76,6 @@ func AddComment(c *gin.Context) {
 		})
 		return
 	}
-
 	resp := dto.AddCommentResp{
 		CommentId: commentId,
 	}

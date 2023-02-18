@@ -2,7 +2,7 @@ app:
   port: 8899
 
 mysql:
-  host: go_mysql_net
+  host: 127.0.0.1
   port: 3306
   database: gin
   username: root

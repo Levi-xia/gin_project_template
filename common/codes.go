@@ -4,7 +4,8 @@ const (
 	SUCCESS         int = 0
 	PARAM_ERROR     int = 101
 	NEED_LOGIN      int = 201
-	NOT_CATCH_ERROR     = 999
+	NOT_CATCH_ERROR int = 999
+	RPC_CALL_FAILED int = 998
 
 	DB_QUERY_FAILED = 206
 
